@@ -21,18 +21,23 @@ class ViewController: UIViewController {
         self.tableView.register(UINib(nibName: "ListCell", bundle: nil), forCellReuseIdentifier: "ListCell")
         self.tableView.register(ListHeaderView.self, forHeaderFooterViewReuseIdentifier: "ListHeaderView")
     }
+    func showURLContents(urlString: String) {
+        if let url = URL(string: urlString) {
+            UIApplication.shared.open(url)
+        }
+    }
 }
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  self.viewModel.urls.count
+        return  self.viewModel.urlString.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "ListCell") as? ListCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.listText.text = self.viewModel.urls[indexPath.row]
+        cell.listText.text = self.viewModel.urlString[indexPath.row]
         return cell
         
     }
@@ -54,6 +59,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.showURLContents(urlString: self.viewModel.url[indexPath.row])
+    }
     
 }

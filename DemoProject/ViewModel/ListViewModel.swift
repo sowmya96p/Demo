@@ -7,7 +7,7 @@
 
 import Foundation
 class ListViewModel {
-    var urls = [
+    var urlString = [
         "apple.com",
         "spacex.com",
         "dapi.co",
@@ -16,5 +16,15 @@ class ListViewModel {
         "amazon.com",
         "boomsupersonic.com",
         "twitter.com"
+    ]
+    var url = [
+        "https://www.apple.com/",
+        "https://www.spacex.com",
+        "https://www.dapi.co",
+        "https://www.facebook.com",
+        "https://www.microsoft.com",
+        "https://www.amazon.com",
+        "https://www.boomsupersonic.com",
+        "https://www.twitter.com"
     ]
 }
