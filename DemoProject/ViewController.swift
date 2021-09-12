@@ -9,13 +9,52 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var startButtonOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var viewModel = ListViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.registerCell()
         self.tableView.tableFooterView = UIView()
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func startButtonTapped(_ sender: UIButton) {
+        self.startButtonOutlet.isHidden = true
+        self.getHttpRequest()
+        
+    }
+    func getHttpRequest() {
+        //Running an HTTP get request on background thread serially
+        DispatchQueue.global(qos: .background).sync {
+            for urlString in self.viewModel.url {
+                if let url = URL(string: urlString)  {
+                    let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+                        self.viewModel.httpResponse = response as? HTTPURLResponse
+                        if error == nil {
+                            guard let data = data else { return }
+                            self.viewModel.sizesArray.append(self.viewModel.getSize(data: data))
+                            print(String(data: data, encoding: .utf8)!)
+                            // Updating UI on main thread
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }else {
+                            if let httpResponse = response as? HTTPURLResponse {
+                                self.viewModel.sizesArray.append("\(httpResponse.statusCode)")
+                            }
+                            
+                        }
+                    }
+                    
+                    
+                    task.resume()
+                }
+                
+            }
+            
+        }
     }
     func registerCell() {
         self.tableView.register(UINib(nibName: "ListCell", bundle: nil), forCellReuseIdentifier: "ListCell")
@@ -30,14 +69,14 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return  self.viewModel.urlString.count
+        self.viewModel.getRowCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = self.tableView.dequeueReusableCell(withIdentifier: "ListCell") as? ListCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.listText.text = self.viewModel.urlString[indexPath.row]
+        cell.displayData(viewModel: self.viewModel, index: indexPath.row)
         return cell
         
     }
@@ -50,7 +89,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         label.textColor = .lightGray
         headerView.backgroundColor = .systemGroupedBackground
         headerView.addSubview(label)
-        
         return headerView
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
