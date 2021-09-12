@@ -16,6 +16,11 @@
 		CF3458D626ED9B42001AD195 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF3458D426ED9B42001AD195 /* LaunchScreen.storyboard */; };
 		CF3458E126ED9B43001AD195 /* DemoProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3458E026ED9B43001AD195 /* DemoProjectTests.swift */; };
 		CF3458EC26ED9B43001AD195 /* DemoProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3458EB26ED9B43001AD195 /* DemoProjectUITests.swift */; };
+		CF34590526EDF1AA001AD195 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF34590326EDF1AA001AD195 /* ListCell.swift */; };
+		CF34590626EDF1AA001AD195 /* ListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF34590426EDF1AA001AD195 /* ListCell.xib */; };
+		CF34590C26EDF463001AD195 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF34590B26EDF463001AD195 /* ListViewModel.swift */; };
+		CF34591426EDF93C001AD195 /* ListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF34591326EDF93C001AD195 /* ListHeaderView.xib */; };
+		CF34591926EDF951001AD195 /* ListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF34591826EDF951001AD195 /* ListHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		CF3458E726ED9B43001AD195 /* DemoProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF3458EB26ED9B43001AD195 /* DemoProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoProjectUITests.swift; sourceTree = "<group>"; };
 		CF3458ED26ED9B43001AD195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF34590326EDF1AA001AD195 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		CF34590426EDF1AA001AD195 /* ListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListCell.xib; sourceTree = "<group>"; };
+		CF34590B26EDF463001AD195 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		CF34591326EDF93C001AD195 /* ListHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListHeaderView.xib; sourceTree = "<group>"; };
+		CF34591826EDF951001AD195 /* ListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +111,8 @@
 		CF3458C526ED9B41001AD195 /* DemoProject */ = {
 			isa = PBXGroup;
 			children = (
+				CF34590A26EDF2F8001AD195 /* ViewModel */,
+				CF3458FF26EDF0CC001AD195 /* ReusableCells */,
 				CF3458C626ED9B41001AD195 /* AppDelegate.swift */,
 				CF3458C826ED9B41001AD195 /* SceneDelegate.swift */,
 				CF3458CA26ED9B41001AD195 /* ViewController.swift */,
@@ -129,6 +141,25 @@
 				CF3458ED26ED9B43001AD195 /* Info.plist */,
 			);
 			path = DemoProjectUITests;
+			sourceTree = "<group>";
+		};
+		CF3458FF26EDF0CC001AD195 /* ReusableCells */ = {
+			isa = PBXGroup;
+			children = (
+				CF34590326EDF1AA001AD195 /* ListCell.swift */,
+				CF34590426EDF1AA001AD195 /* ListCell.xib */,
+				CF34591326EDF93C001AD195 /* ListHeaderView.xib */,
+				CF34591826EDF951001AD195 /* ListHeaderView.swift */,
+			);
+			path = ReusableCells;
+			sourceTree = "<group>";
+		};
+		CF34590A26EDF2F8001AD195 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				CF34590B26EDF463001AD195 /* ListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,6 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF3458D626ED9B42001AD195 /* LaunchScreen.storyboard in Resources */,
+				CF34591426EDF93C001AD195 /* ListHeaderView.xib in Resources */,
+				CF34590626EDF1AA001AD195 /* ListCell.xib in Resources */,
 				CF3458D326ED9B42001AD195 /* Assets.xcassets in Resources */,
 				CF3458CE26ED9B41001AD195 /* Main.storyboard in Resources */,
 			);
@@ -261,9 +294,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF34591926EDF951001AD195 /* ListHeaderView.swift in Sources */,
 				CF3458D126ED9B41001AD195 /* DemoProject.xcdatamodeld in Sources */,
 				CF3458CB26ED9B41001AD195 /* ViewController.swift in Sources */,
+				CF34590C26EDF463001AD195 /* ListViewModel.swift in Sources */,
 				CF3458C726ED9B41001AD195 /* AppDelegate.swift in Sources */,
+				CF34590526EDF1AA001AD195 /* ListCell.swift in Sources */,
 				CF3458C926ED9B41001AD195 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
