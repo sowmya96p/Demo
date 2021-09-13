@@ -7,6 +7,7 @@
 
 import Foundation
 class ListViewModel {
+    var singleSize: String?
     var sizesArray = [String]()
     var httpResponse: HTTPURLResponse?
     var urlString = [

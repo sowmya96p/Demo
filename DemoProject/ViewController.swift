@@ -22,39 +22,45 @@ class ViewController: UIViewController {
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
         self.startButtonOutlet.isHidden = true
-        self.getHttpRequest()
+        self.getHttpRequest(completion: { [weak self] (size, error) in
+            DispatchQueue.main.async {
+            //self?.viewModel.singleSize = size
+            self?.viewModel.sizesArray.append(size)
+            self?.tableView.reloadData()
+                
+            }
+            
+        })
         
     }
-    func getHttpRequest() {
+    func getHttpRequest(completion: @escaping((_ size: String,_ error: String?) -> ())) {
         //Running an HTTP get request on background thread serially
-        DispatchQueue.global(qos: .background).sync {
+        let serialQueue = DispatchQueue(label: "serial.queue")
+        serialQueue.sync {
+            
             for urlString in self.viewModel.url {
-                if let url = URL(string: urlString)  {
-                    let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-                        self.viewModel.httpResponse = response as? HTTPURLResponse
-                        if error == nil {
-                            guard let data = data else { return }
-                            self.viewModel.sizesArray.append(self.viewModel.getSize(data: data))
-                            print(String(data: data, encoding: .utf8)!)
+            if let url = URL(string: urlString)  {
+            let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            self.viewModel.httpResponse = response as? HTTPURLResponse
+            if error == nil {
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
                             // Updating UI on main thread
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                            }
-                        }else {
-                            if let httpResponse = response as? HTTPURLResponse {
-                                self.viewModel.sizesArray.append("\(httpResponse.statusCode)")
-                            }
-                            
-                        }
+            completion(self.viewModel.getSize(data: data),nil)
+            }else {
+            if let httpResponse = response as? HTTPURLResponse {
+            self.viewModel.sizesArray.append("\(httpResponse.statusCode)")
+            completion("\(httpResponse.statusCode)",error?.localizedDescription)
+            }
+                }
                     }
-                    
-                    
                     task.resume()
                 }
                 
             }
             
         }
+        print("2")
     }
     func registerCell() {
         self.tableView.register(UINib(nibName: "ListCell", bundle: nil), forCellReuseIdentifier: "ListCell")
